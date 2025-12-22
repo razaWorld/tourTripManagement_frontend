@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { registerUser } from "../../../api/auth.api";
-import { CustomForm } from "../../../components/global";
+import { CustomButton, CustomForm } from "../../../components/global";
 import "./Register.css";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [form, setForm] = useState({
@@ -9,10 +10,9 @@ function Register() {
     email: "",
     password: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+  const navigate=useNavigate()
   // Dynamic fields (reusable)
   const fields = [
     {
@@ -72,9 +72,10 @@ function Register() {
         loading={loading}
         message={message}
         buttonText="Register"
-        
-       
+        linkText={"go"}
+        linkTo={"not go"}
       />
+      <CustomButton onClick={()=>navigate("/login")}/>
     </div>
   );
 }

@@ -49,8 +49,9 @@ function Login() {
 
     try {
       const { data } = await loginUser(form);
-      setMessage(data.message || "✅ Registration successful");
+      setMessage(data.message || "✅ loggedIn successful");
       setForm({ name: "", email: "", password: "" });
+      navigate('/adminDashboard')
     } catch (error) {
       setMessage(
         error.response?.data?.message ||
