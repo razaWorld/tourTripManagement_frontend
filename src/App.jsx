@@ -1,19 +1,35 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/auth/login/Login";
-import Register from "./pages/auth/register/Register";
-import Dashboard from "./pages/admin/dashboard/Dashboard";
-import MemberDashboard from "./pages/members/dashboard/MemberDashboard";
-
-
+import { Login,Register,PrivateRoute } from "./pages/auth";
+import { Dashboard } from "./pages/admin";
+import { MemberDashboard } from "./pages/members";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/adminDashboard" element={<Dashboard />} />
-        <Route path="/memberDashboard" element={<MemberDashboard />} />
-        <Route path="*" element={<Login />} /> {/* default fallback */}
+
+        {/* 🔐 ADMIN */}
+        <Route
+          path="/adminDashboard"
+          element={
+            <PrivateRoute role="admin">
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        {/* 🔐 MEMBER */}
+        <Route
+          path="/memberDashboard"
+          element={
+            <PrivateRoute role="member">
+              <MemberDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );
