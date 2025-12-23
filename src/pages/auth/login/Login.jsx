@@ -3,6 +3,8 @@ import { loginUser } from "../../../api/auth.api";
 import { CustomButton, CustomForm } from "../../../components/global";
 import { useNavigate } from "react-router-dom";
 
+import "./Login.css";
+
 function Login() {
   const [form, setForm] = useState({
     name: "",
@@ -75,7 +77,7 @@ function Login() {
 
 
   return (
-    <div >
+    <div className="login-page" >
       <CustomForm
         title="Login"
         fields={fields}
@@ -84,7 +86,7 @@ function Login() {
         onSubmit={handleSubmit}
         loading={loading}
         message={message}
-        buttonText="Register"
+        buttonText="Login"
         linkText={"Don't have an account "}
         linkTo={"Register"}
         onFooterLinkPress={() => navigate("/register")} 

@@ -62,7 +62,7 @@ function Register() {
   };
 
   return (
-    <div className="container">
+    <div className="login-page">
       <CustomForm
         title="Register"
         fields={fields}
