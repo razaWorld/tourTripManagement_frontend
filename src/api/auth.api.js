@@ -1,9 +1,12 @@
 import API from "./api";
 
-export const registerUser = (data) => {
-  return API.post("/users/register", data);
-};
+// -------------------- Auth --------------------
+export const registerUser = (data) => API.post("/users/register", data);
+export const loginUser = (data) => API.post("/users/login", data);
+export const testUser = () => API.get("/users/test");
 
-export const loginUser=(data)=>{
-    return API.post("/users/login",data)
-}
+// -------------------- CRUD --------------------
+export const getAllUsers = () => API.get("/users/getAllUsers");
+export const getUserById = (id) => API.get(`/users/getUserById/${id}`);
+export const updateUser = (id, data) =>API.put(`/users/updateUser/${id}`, data);
+export const deleteUser = (id) => API.delete(`/users/deleteUserById/${id}`);

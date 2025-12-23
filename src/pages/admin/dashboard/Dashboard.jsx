@@ -1,14 +1,32 @@
+import { useEffect, useState } from "react";
+import { getAllUsers, deleteUser } from "../../../api/auth.api"; // include delete if needed later
 import "./Dashboard.css";
 
 export default function Dashboard() {
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const res = await getAllUsers();
+        console.log("Members API Response:", res); // 🔍 log API
+        setMembers(res.data); // set members from API
+      } catch (err) {
+        console.error("Error fetching members:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMembers();
+  }, []);
+
   return (
     <div className="dashboard-page">
       {/* HEADER */}
       <header className="dashboard-header">
         <h1>Admin Dashboard</h1>
-        <span className="dashboard-subtitle">
-          Manage Trips, Members, Voting & Societies
-        </span>
+        <span className="dashboard-subtitle">Manage Trips and Members</span>
       </header>
 
       {/* MAIN CONTENT */}
@@ -17,7 +35,7 @@ export default function Dashboard() {
         <section className="dashboard-stats">
           <div className="stat-card">
             <p>Total Members</p>
-            <h3>120</h3>
+            <h3>{members.length}</h3>
           </div>
           <div className="stat-card">
             <p>Total Trips</p>
@@ -27,22 +45,46 @@ export default function Dashboard() {
             <p>Upcoming Trips</p>
             <h3>5</h3>
           </div>
-          <div className="stat-card">
-            <p>Societies</p>
-            <h3>8</h3>
-          </div>
         </section>
 
-        {/* TABLES */}
+        {/* MEMBERS TABLE */}
         <section className="dashboard-tables">
-          <div className="table-card">Trips List (Coming Soon)</div>
-          <div className="table-card">Members List (Coming Soon)</div>
+          <div className="table-card">
+            <h3>Members List</h3>
+            {loading ? (
+              <p className="loading">Loading members...</p>
+            ) : (
+              <div className="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {members.map((member) => (
+                      <tr key={member._id}>
+                        <td>{member.name}</td>
+                        <td>{member.email}</td>
+                        <td>{member.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          <div className="table-card">
+            <h3>Trips List (Coming Soon)</h3>
+          </div>
         </section>
       </main>
 
-      {/* FOOTER */}
       <footer className="dashboard-footer">
-        © 2025 Tour Trip Management System
+        © 2025 Trip Management System
       </footer>
     </div>
   );
