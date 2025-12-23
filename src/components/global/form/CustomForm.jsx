@@ -13,8 +13,8 @@ const CustomForm = ({
   message,
   buttonText,
   linkText, // e.g., "Already have an account? Login"
-  linkTo,   // e.g., "/login"
-  onFooterLinkPress
+  linkTo, // e.g., "/login"
+  onFooterLinkPress,
 }) => {
   return (
     <div className="form-box">
@@ -37,18 +37,21 @@ const CustomForm = ({
           />
         ))}
 
-        <CustomButton
-          type="submit"
-          title={buttonText}
-          loading={loading}
-        />
+        <CustomButton type="submit" title={buttonText} loading={loading} />
       </form>
-          
+
       {/* Conditional link below the form */}
       {linkText && linkTo && (
         <div className="form-footer">
-         {linkText}  
-         <Link onClick={onFooterLinkPress}>{linkTo}</Link>
+          {linkText}
+          <span
+            className="form-link"
+            onClick={onFooterLinkPress}
+            style={{ cursor: "pointer", color: "blue" }}
+          >
+          {linkTo}
+          </span>
+        
         </div>
       )}
     </div>

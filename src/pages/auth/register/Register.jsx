@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../../../api/auth.api";
-import { CustomButton, CustomForm } from "../../../components/global";
+import {  CustomForm } from "../../../components/global";
 import "./Register.css";
 import { useNavigate } from "react-router-dom";
 
@@ -72,10 +72,10 @@ function Register() {
         loading={loading}
         message={message}
         buttonText="Register"
-        linkText={"go"}
-        linkTo={"not go"}
+        linkText={"Already have an account "}
+        linkTo={"Login"}
+        onFooterLinkPress={()=>navigate("/login")}
       />
-      <CustomButton onClick={()=>navigate("/login")}/>
     </div>
   );
 }

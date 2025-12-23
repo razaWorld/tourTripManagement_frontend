@@ -42,25 +42,37 @@ function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage("");
+ const handleSubmit = async (e) => {
+   e.preventDefault();
+   setLoading(true);
+   setMessage("");
 
-    try {
-      const { data } = await loginUser(form);
-      setMessage(data.message || "✅ loggedIn successful");
-      setForm({ name: "", email: "", password: "" });
-      navigate('/adminDashboard')
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message ||
-          "❌ Registration failed, try again"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
+   try {
+     const { data } = await loginUser(form);
+
+     setMessage(data.message || "✅ Login successful");
+
+     // 🔐 Save token (recommended)
+     localStorage.setItem("token", data.token);
+     localStorage.setItem("user", JSON.stringify(data.user));
+
+     // 🔁 ROLE BASED REDIRECTION
+     if (data.user.role === "admin") {
+       navigate("/adminDashboard");
+     } else if (data.user.role === "member") {
+       navigate("/memberDashboard");
+     } else {
+       navigate("/"); // fallback
+     }
+
+     setForm({ name: "", email: "", password: "" });
+   } catch (error) {
+     setMessage(error.response?.data?.message || "❌ Login failed, try again");
+   } finally {
+     setLoading(false);
+   }
+ };
+
 
   return (
     <div >
@@ -75,13 +87,13 @@ function Login() {
         buttonText="Register"
         linkText={"Don't have an account "}
         linkTo={"Register"}
-       onFooterLinkPress={() => navigate("/register")} 
+        onFooterLinkPress={() => navigate("/register")} 
        
 
         
        
       />
-      <CustomButton title="move" onClick={()=>navigate("/register")}/>
+    
     </div>
   );
 }
