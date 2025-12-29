@@ -63,6 +63,8 @@ function Login() {
        navigate("/adminDashboard");
      } else if (data.user.role === "member") {
        navigate("/memberDashboard");
+     } else if (data.user.role === "user") {
+       navigate("/userDashboard");
      } else {
        navigate("/"); // fallback
      }

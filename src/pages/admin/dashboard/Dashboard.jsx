@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, deleteUser } from "../../../api/auth.api"; // include delete if needed later
+import { getAllUsers } from "../../../api/auth.api"; // include delete if needed later
 import "./Dashboard.css";
 
 export default function Dashboard() {
